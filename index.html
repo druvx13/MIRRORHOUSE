@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPERATION: MIRRORHOUSE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=VT323&display=swap');
+        
+        :root {
+            --neon-blue: #08f7fe;
+            --neon-pink: #fe53bb;
+            --neon-green: #09fbd3;
+            --dark-bg: #0f0e17;
+        }
+        
+        body {
+            font-family: 'Space Mono', monospace;
+            background-color: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid var(--neon-blue);
+            white-space: nowrap;
+            letter-spacing: .15em;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--neon-blue); }
+        }
+        
+        .neon-text-blue {
+            text-shadow: 0 0 5px #08f7fe, 0 0 10px #08f7fe, 0 0 20px #08f7fe;
+        }
+        
+        .neon-text-pink {
+            text-shadow: 0 0 5px #fe53bb, 0 0 10px #fe53bb, 0 0 20px #fe53bb;
+        }
+        
+        .neon-border-blue {
+            box-shadow: 0 0 10px #08f7fe, inset 0 0 10px #08f7fe;
+            border: 1px solid #08f7fe;
+        }
+        
+        .mirror-text {
+            transform: scaleX(-1);
+            display: inline-block;
+        }
+        
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #fe53bb;
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+        
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #09fbd3;
+            animation: glitch-anim 1s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim {
+            0% { clip: rect(44px, 9999px, 16px, 0); }
+            20% { clip: rect(12px, 9999px, 99px, 0); }
+            40% { clip: rect(33px, 9999px, 99px, 0); }
+            60% { clip: rect(72px, 9999px, 42px, 0); }
+            80% { clip: rect(65px, 9999px, 29px, 0); }
+            100% { clip: rect(20px, 9999px, 78px, 0); }
+        }
+        
+        .terminal {
+            background: rgba(15, 14, 23, 0.8);
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(8, 247, 254, 0.3);
+        }
+        
+        .terminal-header {
+            height: 25px;
+            background: rgba(8, 247, 254, 0.1);
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .terminal-content {
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            line-height: 1.4;
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background: linear-gradient(90deg, #fe53bb, #09fbd3);
+            animation: progress-anim 3s ease-in-out infinite;
+        }
+        
+        @keyframes progress-anim {
+            0% { width: 0%; }
+            50% { width: 97%; }
+            100% { width: 100%; }
+        }
+        
+        .card-flip {
+            perspective: 1000px;
+        }
+        
+        .card-flip-inner {
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        
+        .card-flip:hover .card-flip-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .card-flip-front, .card-flip-back {
+            backface-visibility: hidden;
+        }
+        
+        .card-flip-back {
+            transform: rotateY(180deg);
+        }
+        
+        .neon-pulse {
+            animation: neon-pulse 2s infinite alternate;
+        }
+        
+        @keyframes neon-pulse {
+            from {
+                box-shadow: 0 0 5px #08f7fe, 0 0 10px #08f7fe, 0 0 20px #08f7fe;
+            }
+            to {
+                box-shadow: 0 0 10px #08f7fe, 0 0 20px #08f7fe, 0 0 30px #08f7fe;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <div class="glitch mb-6" data-text="OPERATION: MIRRORHOUSE">
+                <h1 class="text-5xl md:text-6xl font-bold neon-text-blue">OPERATION: MIRRORHOUSE</h1>
+            </div>
+            <p class="text-xl text-gray-400 italic">A psychological gambit designed to turn self-deception into self-mastery.</p>
+            <div class="progress-bar my-4"></div>
+        </header>
+        
+        <!-- Plan Stats -->
+        <div class="flex justify-between mb-12 text-sm">
+            <div class="bg-black bg-opacity-50 px-4 py-2 rounded neon-border-blue">
+                <span class="text-gray-400">PLAN LEVEL:</span> 
+                <span class="font-bold neon-text-green">97%</span>
+            </div>
+            <div class="bg-black bg-opacity-50 px-4 py-2 rounded neon-border-blue">
+                <span class="text-gray-400">ESCAPE RISK:</span> 
+                <span class="font-bold neon-text-pink">Low — from others. High, from yourself.</span>
+            </div>
+        </div>
+        
+        <!-- Phase Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <!-- Phase 1 -->
+            <div class="card-flip">
+                <div class="card-flip-inner">
+                    <div class="card-flip-front bg-black bg-opacity-50 p-6 rounded-lg h-full neon-border-blue">
+                        <div class="flex items-center mb-4">
+                            <span class="text-2xl mr-2 neon-text-blue">01</span>
+                            <h3 class="text-2xl font-bold">The Fracture</h3>
+                        </div>
+                        <p class="mb-4">We begin by identifying the parts of your mind you <span class="italic">dislike</span>, the cognitive tics that betray your control — indecision, doubt, emotional drift.</p>
+                        <ul class="list-disc pl-5 mb-4 space-y-2">
+                            <li>Assign each weakness a symbolic persona</li>
+                            <li>Write letters to yourself <span class="italic">as if you were them</span></li>
+                        </ul>
+                        <div class="bg-black bg-opacity-70 p-4 rounded">
+                            <p class="italic neon-text-pink">"You cannot defeat what you do not understand."</p>
+                        </div>
+                    </div>
+                    <div class="card-flip-back bg-black bg-opacity-70 p-6 rounded-lg h-full flex flex-col justify-center items-center neon-border-blue">
+                        <h4 class="text-xl font-bold mb-4 neon-text-green">YOUR MISSION</h4>
+                        <ol class="list-decimal pl-5 space-y-2 text-sm">
+                            <li>List your 3 weakest mental patterns</li>
+                            <li>Name each one (The Doubter, etc.)</li>
+                            <li>Write a letter from each persona</li>
+                        </ol>
+                        <button class="mt-6 px-4 py-2 bg-transparent neon-border-blue rounded hover:bg-blue-900 transition" onclick="showPhaseModal(1)">BEGIN</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Phase 2 -->
+            <div class="card-flip">
+                <div class="card-flip-inner">
+                    <div class="card-flip-front bg-black bg-opacity-50 p-6 rounded-lg h-full neon-border-blue">
+                        <div class="flex items-center mb-4">
+                            <span class="text-2xl mr-2 neon-text-blue">02</span>
+                            <h3 class="text-2xl font-bold">The Rebellion</h3>
+                        </div>
+                        <p class="mb-4">Now we stage an internal coup against your weaker selves.</p>
+                        <ul class="list-disc pl-5 mb-4 space-y-2">
+                            <li>Create <span class="font-bold">The Architect</span> identity</li>
+                            <li>Use mirror script affirmations</li>
+                            <li>Introduce controlled discomfort</li>
+                        </ul>
+                        <div class="bg-black bg-opacity-70 p-4 rounded">
+                            <p class="italic neon-text-pink">"Let the weak voices scream. The Architect builds over their ruins."</p>
+                        </div>
+                    </div>
+                    <div class="card-flip-back bg-black bg-opacity-70 p-6 rounded-lg h-full flex flex-col justify-center items-center neon-border-blue">
+                        <h4 class="text-xl font-bold mb-4 neon-text-green">YOUR MISSION</h4>
+                        <ol class="list-decimal pl-5 space-y-2 text-sm">
+                            <li>Define The Architect's traits</li>
+                            <li>Write 3 mirror affirmations</li>
+                            <li>Choose 1 discomfort ritual</li>
+                        </ol>
+                        <button class="mt-6 px-4 py-2 bg-transparent neon-border-blue rounded hover:bg-blue-900 transition" onclick="showPhaseModal(2)">BEGIN</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Phase 3 -->
+            <div class="card-flip">
+                <div class="card-flip-inner">
+                    <div class="card-flip-front bg-black bg-opacity-50 p-6 rounded-lg h-full neon-border-blue">
+                        <div class="flex items-center mb-4">
+                            <span class="text-2xl mr-2 neon-text-blue">03</span>
+                            <h3 class="text-2xl font-bold">The Rewrite</h3>
+                        </div>
+                        <p class="mb-4">This is where the magic happens. Merge reality with your ideal version until your subconscious can't tell the difference.</p>
+                        <ul class="list-disc pl-5 mb-4 space-y-2">
+                            <li>Journal two versions of your day</li>
+                            <li>Plant false memories of discipline</li>
+                        </ul>
+                        <div class="bg-black bg-opacity-70 p-4 rounded">
+                            <p class="italic neon-text-pink">"Memory is fiction. And fiction is power."</p>
+                        </div>
+                    </div>
+                    <div class="card-flip-back bg-black bg-opacity-70 p-6 rounded-lg h-full flex flex-col justify-center items-center neon-border-blue">
+                        <h4 class="text-xl font-bold mb-4 neon-text-green">YOUR MISSION</h4>
+                        <ol class="list-decimal pl-5 space-y-2 text-sm">
+                            <li>Journal today's actual events</li>
+                            <li>Rewrite as The Architect lived it</li>
+                            <li>Visualize the merged version</li>
+                        </ol>
+                        <button class="mt-6 px-4 py-2 bg-transparent neon-border-blue rounded hover:bg-blue-900 transition" onclick="showPhaseModal(3)">BEGIN</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Phase 4 -->
+            <div class="card-flip">
+                <div class="card-flip-inner">
+                    <div class="card-flip-front bg-black bg-opacity-50 p-6 rounded-lg h-full neon-border-blue">
+                        <div class="flex items-center mb-4">
+                            <span class="text-2xl mr-2 neon-text-blue">04</span>
+                            <h3 class="text-2xl font-bold">The Signature</h3>
+                        </div>
+                        <p class="mb-4">Leave behind small, recurring rituals to cement the transformation.</p>
+                        <ul class="list-disc pl-5 mb-4 space-y-2">
+                            <li>Whisper a phrase when tying shoes</li>
+                            <li>Wear a ring on dominant hand</li>
+                            <li>Carry a black playing card</li>
+                        </ul>
+                        <div class="bg-black bg-opacity-70 p-4 rounded">
+                            <p class="italic neon-text-pink">"Proceed with caution."</p>
+                        </div>
+                    </div>
+                    <div class="card-flip-back bg-black bg-opacity-70 p-6 rounded-lg h-full flex flex-col justify-center items-center neon-border-blue">
+                        <h4 class="text-xl font-bold mb-4 neon-text-green">YOUR MISSION</h4>
+                        <ol class="list-decimal pl-5 space-y-2 text-sm">
+                            <li>Choose your anchor phrase</li>
+                            <li>Select your victory token</li>
+                            <li>Schedule weekly black card days</li>
+                        </ol>
+                        <button class="mt-6 px-4 py-2 bg-transparent neon-border-blue rounded hover:bg-blue-900 transition" onclick="showPhaseModal(4)">BEGIN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Terminal Section -->
+        <div class="terminal mb-12">
+            <div class="terminal-header flex items-center px-3">
+                <div class="terminal-button bg-red-500"></div>
+                <div class="terminal-button bg-yellow-500"></div>
+                <div class="terminal-button bg-green-500"></div>
+                <div class="ml-2 text-xs">mirrorhouse_terminal</div>
+            </div>
+            <div class="terminal-content" id="terminalOutput">
+                <p>> Initializing Operation: Mirrorhouse...</p>
+                <p>> Loading cognitive protocols...</p>
+                <p>> Establishing connection to subconscious...</p>
+                <p class="neon-text-green">> Connection established.</p>
+                <p>> Welcome, Architect.</p>
+                <p>> Select a phase to begin reconstruction.</p>
+            </div>
+        </div>
+        
+        <!-- Mirror Affirmation Generator -->
+        <div class="bg-black bg-opacity-50 p-6 rounded-lg neon-border-blue mb-12">
+            <h3 class="text-2xl font-bold mb-4 neon-text-blue">Mirror Affirmation Generator</h3>
+            <div class="mb-4">
+                <label class="block mb-2">Enter your affirmation:</label>
+                <input type="text" id="affirmationInput" class="w-full bg-black bg-opacity-70 border border-gray-700 rounded p-2 mb-2 focus:outline-none focus:border-blue-500">
+                <button onclick="generateMirrorAffirmation()" class="px-4 py-2 bg-transparent neon-border-blue rounded hover:bg-blue-900 transition">Generate</button>
+            </div>
+            <div class="bg-black bg-opacity-70 p-4 rounded">
+                <p class="text-center text-xl" id="mirrorAffirmation"></p>
+            </div>
+        </div>
+        
+        <!-- Architect's Journal -->
+        <div class="bg-black bg-opacity-50 p-6 rounded-lg neon-border-blue">
+            <h3 class="text-2xl font-bold mb-4 neon-text-blue">Architect's Journal</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block mb-2">Reality:</label>
+                    <textarea id="realityJournal" class="w-full h-32 bg-black bg-opacity-70 border border-gray-700 rounded p-2 focus:outline-none focus:border-blue-500" placeholder="How your day actually went..."></textarea>
+                </div>
+                <div>
+                    <label class="block mb-2">Architect's Version:</label>
+                    <textarea id="architectJournal" class="w-full h-32 bg-black bg-opacity-70 border border-gray-700 rounded p-2 focus:outline-none focus:border-blue-500" placeholder="How The Architect would have lived it..."></textarea>
+                </div>
+            </div>
+            <button onclick="mergeJournals()" class="px-4 py-2 bg-transparent neon-border-blue rounded hover:bg-blue-900 transition">Merge Realities</button>
+            <div id="mergedJournal" class="mt-4 bg-black bg-opacity-70 p-4 rounded hidden">
+                <h4 class="font-bold mb-2 neon-text-green">Merged Reality:</h4>
+                <p id="mergedJournalContent"></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modals -->
+    <div id="phaseModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
+        <div class="bg-gray-900 rounded-lg max-w-md w-full mx-4 neon-border-blue">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-2xl font-bold neon-text-blue" id="modalTitle">Phase 1: The Fracture</h3>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-white">&times;</button>
+                </div>
+                <div id="modalContent">
+                    <p>Loading phase instructions...</p>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button onclick="closeModal()" class="px-4 py-2 bg-transparent neon-border-blue rounded hover:bg-blue-900 transition">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-6 right-6">
+        <button onclick="showRandomQuote()" class="w-12 h-12 rounded-full neon-border-blue flex items-center justify-center neon-pulse">
+            <i class="fas fa-question text-xl"></i>
+        </button>
+    </div>
+    
+    <script>
+        // Terminal typing effect
+        function typeWriter(text, elementId, speed) {
+            let i = 0;
+            const element = document.getElementById(elementId);
+            element.innerHTML = "";
+            
+            function typing() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, speed);
+                }
+            }
+            
+            typing();
+        }
+        
+        // Mirror affirmation generator
+        function generateMirrorAffirmation() {
+            const input = document.getElementById('affirmationInput').value;
+            if (input.trim() === "") {
+                alert("Please enter an affirmation first.");
+                return;
+            }
+            
+            const mirrored = input.split('').reverse().join('');
+            const mirrorElement = document.getElementById('mirrorAffirmation');
+            mirrorElement.innerHTML = `<span class="mirror-text">${mirrored}</span>`;
+            
+            // Add to terminal
+            const terminal = document.getElementById('terminalOutput');
+            terminal.innerHTML += `<p>> New mirror affirmation generated: <span class="neon-text-green">"${input}"</span></p>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+        
+        // Journal merger
+        function mergeJournals() {
+            const reality = document.getElementById('realityJournal').value;
+            const architect = document.getElementById('architectJournal').value;
+            
+            if (reality.trim() === "" || architect.trim() === "") {
+                alert("Please fill both journal sections.");
+                return;
+            }
+            
+            const merged = `REALITY: ${reality}\n\nARCHITECT'S VERSION: ${architect}\n\nMERGE POINT: ${getRandomMergePoint()}`;
+            
+            document.getElementById('mergedJournalContent').textContent = merged;
+            document.getElementById('mergedJournal').classList.remove('hidden');
+            
+            // Add to terminal
+            const terminal = document.getElementById('terminalOutput');
+            terminal.innerHTML += `<p>> Journal entries merged. Reality rewrite in progress...</p>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+        
+        function getRandomMergePoint() {
+            const points = [
+                "Focus on the emotional resonance between both versions.",
+                "Identify where The Architect would have made different choices.",
+                "Visualize the merged version before sleep tonight.",
+                "Notice how your memory already begins to blend the two.",
+                "The distinction matters less than the feeling of control."
+            ];
+            return points[Math.floor(Math.random() * points.length)];
+        }
+        
+        // Phase modals
+        function showPhaseModal(phase) {
+            const modal = document.getElementById('phaseModal');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            
+            let phaseTitle = "";
+            let phaseContent = "";
+            
+            switch(phase) {
+                case 1:
+                    phaseTitle = "Phase 1: The Fracture";
+                    phaseContent = `
+                        <h4 class="font-bold mb-2 neon-text-pink">Instructions:</h4>
+                        <ol class="list-decimal pl-5 mb-4 space-y-2">
+                            <li>Identify 3 mental patterns you want to change</li>
+                            <li>Give each a name and persona (e.g., The Doubter)</li>
+                            <li>Write a letter from each persona's perspective</li>
+                        </ol>
+                        <h4 class="font-bold mb-2 neon-text-green">Example:</h4>
+                        <div class="bg-black bg-opacity-70 p-3 rounded mb-4">
+                            <p>"Dear Self,</p>
+                            <p>I am The Avoider. I make you scroll mindlessly when work gets hard. I whisper that tomorrow is better than today. But really, I'm just afraid of failure.</p>
+                            <p>Signed, Your Protection Mechanism"</p>
+                        </div>
+                        <p class="text-sm italic">This exercise reveals how these personas operate in your mind.</p>
+                    `;
+                    break;
+                case 2:
+                    phaseTitle = "Phase 2: The Rebellion";
+                    phaseContent = `
+                        <h4 class="font-bold mb-2 neon-text-pink">Instructions:</h4>
+                        <ol class="list-decimal pl-5 mb-4 space-y-2">
+                            <li>Define The Architect's core traits (e.g., decisive, focused)</li>
+                            <li>Use the Mirror Affirmation Generator to create 3 statements</li>
+                            <li>Choose one discomfort ritual to implement daily</li>
+                        </ol>
+                        <h4 class="font-bold mb-2 neon-text-green">Discomfort Options:</h4>
+                        <ul class="list-disc pl-5 mb-4 space-y-1">
+                            <li>Cold shower for 1 minute</li>
+                            <li>30 minutes of complete silence</li>
+                            <li>Write with your non-dominant hand</li>
+                            <li>No phone for first hour after waking</li>
+                        </ul>
+                        <p class="text-sm italic">Discomfort strengthens mental resilience against old patterns.</p>
+                    `;
+                    break;
+                case 3:
+                    phaseTitle = "Phase 3: The Rewrite";
+                    phaseContent = `
+                        <h4 class="font-bold mb-2 neon-text-pink">Instructions:</h4>
+                        <ol class="list-decimal pl-5 mb-4 space-y-2">
+                            <li>Journal your day's events objectively</li>
+                            <li>Rewrite key moments as The Architect would have handled them</li>
+                            <li>Before sleep, visualize the merged version intensely</li>
+                        </ol>
+                        <h4 class="font-bold mb-2 neon-text-green">Key Techniques:</h4>
+                        <ul class="list-disc pl-5 mb-4 space-y-1">
+                            <li>Focus on decision points where versions differ</li>
+                            <li>Emphasize emotional states in both versions</li>
+                            <li>Repeat the merged version aloud 3 times</li>
+                        </ul>
+                        <p class="text-sm italic">After 2 weeks, your brain will begin accepting the merged version as memory.</p>
+                    `;
+                    break;
+                case 4:
+                    phaseTitle = "Phase 4: The Signature";
+                    phaseContent = `
+                        <h4 class="font-bold mb-2 neon-text-pink">Instructions:</h4>
+                        <ol class="list-decimal pl-5 mb-4 space-y-2">
+                            <li>Choose an anchor phrase to repeat during routine actions</li>
+                            <li>Select a physical token (ring, bracelet, etc.) for victory days</li>
+                            <li>Carry a black playing card weekly as a reminder</li>
+                        </ol>
+                        <h4 class="font-bold mb-2 neon-text-green">Example Phrases:</h4>
+                        <ul class="list-disc pl-5 mb-4 space-y-1">
+                            <li>"I am rewritten."</li>
+                            <li>"The Architect builds."</li>
+                            <li>"Memory bends to will."</li>
+                        </ul>
+                        <div class="bg-black bg-opacity-70 p-3 rounded">
+                            <p class="italic">The black card serves no purpose except to remind you that reality is more malleable than you think.</p>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            title.textContent = phaseTitle;
+            content.innerHTML = phaseContent;
+            modal.classList.remove('hidden');
+            
+            // Add to terminal
+            const terminal = document.getElementById('terminalOutput');
+            terminal.innerHTML += `<p>> Phase ${phase} protocol accessed. Architect privileges granted.</p>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+        
+        function closeModal() {
+            document.getElementById('phaseModal').classList.add('hidden');
+        }
+        
+        // Random quotes
+        function showRandomQuote() {
+            const quotes = [
+                "The mind accepts what it cannot disprove.",
+                "You are always one decision away from a different life.",
+                "Discomfort is the currency of transformation.",
+                "What you rehearse, you remember. What you remember, you become.",
+                "The Architect doesn't wait for motivation. The Architect builds it."
+            ];
+            
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            
+            // Add to terminal
+            const terminal = document.getElementById('terminalOutput');
+            terminal.innerHTML += `<p>> System message: <span class="neon-text-pink">"${randomQuote}"</span></p>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+        
+        // Initialize terminal typing effect
+        window.onload = function() {
+            setTimeout(() => {
+                const terminal = document.getElementById('terminalOutput');
+                terminal.innerHTML += `<p>> System ready. Neural pathways primed for reconstruction.</p>`;
+                terminal.scrollTop = terminal.scrollHeight;
+            }, 2000);
+        };
+    </script>
+</body>
+</html>
